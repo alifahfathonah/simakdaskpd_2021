@@ -1,0 +1,21 @@
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+	ServerSignature Off
+	Options All -Indexes
+	RewriteCond $1 !^(index\.php|resources|robots\.txt)
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^(.*)$ index.php?/$1 [L,QSA]
+</IfModule>
+
+<Files .htaccess>
+ Order allow,deny
+ deny from all
+</Files>
+
+
+<FilesMatch "\.(htaccess)$">
+	Order allow,deny
+	Deny from all
+</FilesMatch>
+php_value memory_limit 1024M
