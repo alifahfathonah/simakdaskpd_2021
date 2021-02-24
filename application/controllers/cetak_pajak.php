@@ -4098,7 +4098,7 @@ class cetak_pajak extends CI_Controller {
 					 </TR>
 					 ';
 			
-				$map_pot="('2130101','2130201','2130301','2130401','2130501','4110707')";
+				$map_pot="('210105010001','210105020001','210106010001','210105030001','210601050005','411070710001')";
 				$map_pot="(SELECT map_pot from ms_pot)";
 				if ($jns=='2'){
 				$query = $this->db->query("	SELECT a.kd_rek6, a.nm_rek6, ISNULL(SUM(terima_lalu),0) as terima_lalu, ISNULL(SUM(terima_ini),0) as terima_ini, ISNULL(SUM(terima),0) as terima,
@@ -4180,12 +4180,19 @@ class cetak_pajak extends CI_Controller {
 											ORDER BY kd_rek6
 											"); 	
 				} else{
-				$query = $this->db->query("	SELECT a.kd_rek6, a.nm_rek6, ISNULL(SUM(terima_lalu),0) as terima_lalu, ISNULL(SUM(terima_ini),0) as terima_ini, ISNULL(SUM(terima),0) as terima,
+				$query = $this->db->query("	
+					SELECT DISTINCT kd_rek6, 
+case WHEN kd_rek6='210102010001' then 'Iuran BPJS Kesehatan'
+when kd_rek6='210108010001' then 'Iuran Wajib Pegawai'
+else (select top 1 nm_rek5 from ms_pot where map_pot=kd_rek6) end as nm_rek6
+
+, terima_lalu, terima_ini, terima, setor_lalu, setor_ini, setor, sisa from (
+SELECT a.kd_rek6, a.nm_rek6, ISNULL(SUM(terima_lalu),0) as terima_lalu, ISNULL(SUM(terima_ini),0) as terima_ini, ISNULL(SUM(terima),0) as terima,
 											ISNULL(SUM(setor_lalu),0) as setor_lalu, ISNULL(SUM(setor_ini),0) as setor_ini, ISNULL(SUM(setor),0) as setor, 
 											ISNULL(SUM(terima)-SUM(setor),0) as sisa
 											FROM
 											(SELECT RTRIM(map_pot) as kd_rek6, nm_rek5 nm_rek6 FROM ms_pot WHERE map_pot IN $map_pot)a
-											LEFT JOIN 
+											inner JOIN 
 											(SELECT b.kd_rek6, b.nm_rek6,a.kd_skpd,
 											SUM(CASE WHEN MONTH(tgl_bukti)<'$nbulan' THEN b.nilai ELSE 0 END) AS terima_lalu,
 											SUM(CASE WHEN MONTH(tgl_bukti)='$nbulan' THEN b.nilai ELSE 0 END) AS terima_ini,
@@ -4214,7 +4221,7 @@ class cetak_pajak extends CI_Controller {
 											WHERE left(a.kd_skpd,17)=left('$lcskpd',17)					
 											GROUP BY  b.kd_rek6, b.nm_rek6, a.kd_skpd)b
 											ON a.kd_rek6=b.kd_rek6 and a.nm_rek6=a.nm_rek6
-											GROUP BY a.kd_rek6, a.nm_rek6
+											GROUP BY a.kd_rek6, a.nm_rek6) okie
 											ORDER BY kd_rek6");  	
 				}
 				$i=0;
