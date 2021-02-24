@@ -746,7 +746,7 @@ class cetak_spm extends CI_Controller {
                                     <td width='20%' style='font-size:12px' valign='center' align='center' valign='top'><b>Keterangan</b></td>
                                     </thead>
                                 </tr>";
-                                 $sql = "SELECT * from trspmpot where no_spm='$lcnospm' AND kd_rek6 IN('210107010001','210104010001','2110501','2110701','2110801','2110901','4140612') AND kd_skpd='$kd'";
+                                 $sql = "SELECT * from trspmpot where no_spm='$lcnospm' AND kd_rek6 IN('','','2110501','2110701','2110801','2110901','4140612') AND kd_skpd='$kd'";
                                         $hasil = $this->db->query($sql);
                                         $lcno = 0;
                                         $lntotalpot = 0;
@@ -793,7 +793,7 @@ class cetak_spm extends CI_Controller {
                                     <td align='center' valign='center' style='font-size:12px'><b>Keterangan</b></td>
                                 </tr>";
                                  $sql = "
-										 SELECT 2 urut, * from trspmpot where no_spm='$lcnospm' AND kd_rek6 NOT IN ('210107010001','210104010001','2130301','2110501','2110701','2110801','2110901','4140612') AND kd_skpd='$kd'
+										 SELECT 2 urut, * from trspmpot where no_spm='$lcnospm' AND kd_rek6 NOT IN ('','','2130301','2110501','2110701','2110801','2110901','4140612') AND kd_skpd='$kd'
 										 ORDER BY urut";
                                         $hasil = $this->db->query($sql);
                                         $lcno = 0;
