@@ -4175,7 +4175,7 @@ class cetak_pajak extends CI_Controller {
 											WHERE (nocek !='' AND nocek IS NOT NULL)	
 											AND	left(a.kd_skpd,17)=left('$lcskpd',17)					
 											GROUP BY  b.kd_rek6, b.nm_rek6, a.kd_skpd)b
-											ON a.kd_rek6=b.kd_rek6
+											ON a.kd_rek6=b.kd_rek6 and a.nm_rek6=a.nm_rek6
 											GROUP BY a.kd_rek6, a.nm_rek6
 											ORDER BY kd_rek6
 											"); 	
@@ -4213,7 +4213,7 @@ class cetak_pajak extends CI_Controller {
 											LEFT JOIN trhsp2d c on a.kd_skpd=c.kd_skpd AND a.no_sp2d=c.no_sp2d
 											WHERE left(a.kd_skpd,17)=left('$lcskpd',17)					
 											GROUP BY  b.kd_rek6, b.nm_rek6, a.kd_skpd)b
-											ON a.kd_rek6=b.kd_rek6
+											ON a.kd_rek6=b.kd_rek6 and a.nm_rek6=a.nm_rek6
 											GROUP BY a.kd_rek6, a.nm_rek6
 											ORDER BY kd_rek6");  	
 				}
