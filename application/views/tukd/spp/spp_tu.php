@@ -39,6 +39,7 @@
     var edit     = '';
     var lcstatus = '';
     var n_totalspd = 0;
+    var kd_sub_skpd='';
 
     $(document).ready(function() {
       $("#accordion").accordion({
@@ -308,6 +309,7 @@
         urut     = rowData.urut; 
         no_spp   = rowData.no_spp;         
         kode     = rowData.kd_skpd;
+        kd_sub_skpd     = rowData.kd_sub_skpd;
         sp       = rowData.no_spd;          
         bl       = rowData.bulan;
         tg       = rowData.tgl_spp;
@@ -357,19 +359,21 @@
 
 
      $('#kg').combogrid({  
-      panelWidth:500,  
+      panelWidth:900,  
       url: '<?php echo base_url(); ?>/index.php/sppc/kegi',  
       idField:'kd_kegiatan',  
       textField:'kd_kegiatan',
-      mode:'remote',  
-      fitColumns:true,                       
+      mode:'remote',                      
       columns:[[  
-      {field:'kd_kegiatan',title:'Kode',width:30},  
-      {field:'nm_kegiatan',title:'Nama',align:'left',width:70}                          
+      {field:'kd_kegiatan',title:'Kode',width:100},  
+      {field:'nm_kegiatan',title:'Nama',align:'left',width:200},
+      {field:'kd_skpd',title:'Kode SKPD',width:200},  
+      {field:'nm_skpd',title:'Nama SKPD',align:'left',width:200}                          
       ]],
       onSelect:function(rowIndex,rowData){
 
         kegi   = rowData.kd_kegiatan;
+        kd_sub_skpd   = rowData.kd_skpd;
         nmkegi = rowData.nm_kegiatan;
         $("#nm_kg").attr("value",rowData.nm_kegiatan);
         prog = rowData.kd_program;
@@ -613,7 +617,7 @@
               });
                   });
       }
-  function validate_kegiatan(){
+  function validate_kegiatan(){ 
     var kode_s = document.getElementById('dn').value;
     $(function(){
       $('#rek_kegi').combogrid({  
@@ -644,6 +648,7 @@
 
     var kode_keg = $('#rek_kegi').combogrid('getValue') ;
     var koderek = $('#rek_reke').combogrid('getValue') ;
+    kd_sub_skpd=kd_sub_skpd;
 
     $(function(){
       $('#sumber_dn').combogrid({            
@@ -652,7 +657,7 @@
        textField:'sumber_dana',  
        mode:'remote',      
        url:'<?php echo base_url(); ?>index.php/sppc/load_reksumber_dana',
-       queryParams:({giat:kode_keg,kd:kode,kd_sub_skpd:kode,rek:koderek}),                   
+       queryParams:({giat:kode_keg,kd:kode,kd_sub_skpd:kd_sub_skpd,rek:koderek}),                   
        columns:[[  
        {field:'sumber_dana',title:'Sumber Dana',width:180}
        ]],  
@@ -695,7 +700,8 @@
               frek = rek5;
             }
           }
-         var kegiatan       = $("#kg").combogrid("getValue") ;
+          kd_sub_skpd=kd_sub_skpd;
+          var kegiatan       = $("#kg").combogrid("getValue") ;
           var beban   = document.getElementById('jns_beban').value;
           var kode_s   = document.getElementById('dn').value  ;
           var kode_keg = $('#rek_kegi').combogrid('getValue') ;
@@ -709,7 +715,7 @@
                     textField :'kd_rek5',  
                     mode      :'remote',
                     url       :'<?php echo base_url(); ?>index.php/sppc/load_rek_ar',  
-                    queryParams:({kdkegiatan:kegiatan,kdrek:frek}), 
+                    queryParams:({kdkegiatan:kegiatan,kd_sub_skpd:kd_sub_skpd,kdrek:frek}), 
                     columns:[[  
                     {field:'kd_rek5',title:'Kode Rekening',width:150},  
                     {field:'nm_rek5',title:'Nama Rekening',width:700}    
@@ -802,7 +808,7 @@ function validate_kegi(spd){
         if(cskpd != ''){ //hapus jika selesai 
           $(function(){
             $('#kg').combogrid({  
-              panelWidth:500,                          
+              panelWidth:900,                          
               url: '<?php echo base_url(); ?>/index.php/sppc/kegiatan_spd_tu',
               queryParams:({spd:spd,tgl_spp:tgl_spp}),  
               idField:'kd_kegiatan',  
@@ -814,7 +820,7 @@ function validate_kegi(spd){
     }else{ //hapus jika selesai 
       $(function(){
         $('#kg').combogrid({  
-          panelWidth:500,                          
+          panelWidth:900,                          
           url: '<?php echo base_url(); ?>/index.php/tukd/kegiatan_spd',
           queryParams:({spd:spd,tgl_spp:tgl_spp}),  
           idField:'kd_kegiatan',  
@@ -1131,7 +1137,8 @@ align:'right'
      }
 
      
-     function hsimpan(){        
+     function hsimpan(){
+     kd_sub_skpd=kd_sub_skpd;        
       cdate    = '<?php echo date("Y-m-d"); ?>';
       var a       = (document.getElementById('no_spp').value).split(" ").join("");
       var a_hide  = document.getElementById('no_spp_hide').value;
@@ -1247,8 +1254,8 @@ align:'right'
 
     //---------
     
-    lcinsert = "(no_spp,  kd_skpd,    keperluan, bulan,   no_spd,    jns_spp, jns_beban, bank,    nmrekan,  no_rek,  npwp,    nm_skpd,  tgl_spp, status, username,     last_update,   nilai,    no_bukti,       nm_sub_kegiatan,  kd_program,  nm_program,  pimpinan,  no_tagih,    tgl_tagih,  sts_tagih, no_bukti2, no_bukti3, no_bukti4, no_bukti5, no_spd2, no_spd3, no_spd4 , alamat, kontrak, lanjut, tgl_mulai, tgl_akhir,kd_sub_kegiatan)"; 
-    lcvalues = "('"+a+"', '"+kdskpd+"', '"+e+"',   '"+d+"', '"+spd+"', '"+c+"', '1', '"+g+"', '',  '"+i+"', '', '"+j+"',  '"+b+"', '0',    '',           '',            '"+k+"',  '',           '"+l+"',         '"+m+"',     '"+n+"',     '',  '',     '',    '',    '',       '',        '',        '',        '',      '',      '',      '', '','','','','"+y+"' )";
+    lcinsert = "(no_spp,  kd_skpd,    keperluan, bulan,   no_spd,    jns_spp, jns_beban, bank,    nmrekan,  no_rek,  npwp,    nm_skpd,  tgl_spp, status, username,     last_update,   nilai,    no_bukti,       nm_sub_kegiatan,  kd_program,  nm_program,  pimpinan,  no_tagih,    tgl_tagih,  sts_tagih, no_bukti2, no_bukti3, no_bukti4, no_bukti5, no_spd2, no_spd3, no_spd4 , alamat, kontrak, lanjut, tgl_mulai, tgl_akhir,kd_sub_kegiatan, kd_sub_skpd)"; 
+    lcvalues = "('"+a+"', '"+kdskpd+"', '"+e+"',   '"+d+"', '"+spd+"', '"+c+"', '1', '"+g+"', '',  '"+i+"', '', '"+j+"',  '"+b+"', '0',    '',           '',            '"+k+"',  '',           '"+l+"',         '"+m+"',     '"+n+"',     '',  '',     '',    '',    '',       '',        '',        '',        '',      '',      '',      '', '','','','','"+y+"','"+kd_sub_skpd+"' )";
  
 
             $(document).ready(function(){
@@ -1284,9 +1291,9 @@ align:'right'
                     cgiat     = ckdgiat.substr(0,22);
 
                     if (i>0) {
-                      csql = csql+","+"('"+a+"','"+ckdrek+"','"+cnmrek+"','"+cnilai+"','"+kdskpd+"','"+ckdgiat+"','"+spd+"','"+sumber+"','"+cnmgiat+"')";
+                      csql = csql+","+"('"+a+"','"+ckdrek+"','"+cnmrek+"','"+cnilai+"','"+kdskpd+"','"+ckdgiat+"','"+spd+"','"+sumber+"','"+cnmgiat+"','"+kd_sub_skpd+"')";
                     } else {
-                      csql = "values('"+a+"','"+ckdrek+"','"+cnmrek+"','"+cnilai+"','"+kdskpd+"','"+ckdgiat+"','"+spd+"','"+sumber+"','"+cnmgiat+"')";                 
+                      csql = "values('"+a+"','"+ckdrek+"','"+cnmrek+"','"+cnilai+"','"+kdskpd+"','"+ckdgiat+"','"+spd+"','"+sumber+"','"+cnmgiat+"','"+kd_sub_skpd+"')";                 
                     }                                             
                   }                       
                   $(document).ready(function(){
@@ -1382,9 +1389,9 @@ $(document).ready(function(){
               cgiat     = ckdgiat.substr(0,22);
               no        = i + 1 ;    
               if (i>0) {
-                csql = csql+","+"('"+a+"','"+ckdrek+"','"+cnmrek+"','"+cnilai+"','"+kdskpd+"','"+ckdgiat+"','"+spd+"','"+csumber+"','"+cnmrekgiat+"')";
+                csql = csql+","+"('"+a+"','"+ckdrek+"','"+cnmrek+"','"+cnilai+"','"+kdskpd+"','"+ckdgiat+"','"+spd+"','"+csumber+"','"+cnmrekgiat+"','"+kd_sub_skpd+"')";
               } else {
-                csql = "values('"+a+"','"+ckdrek+"','"+cnmrek+"','"+cnilai+"','"+kdskpd+"','"+ckdgiat+"','"+spd+"','"+csumber+"','"+cnmrekgiat+"')";                 
+                csql = "values('"+a+"','"+ckdrek+"','"+cnmrek+"','"+cnilai+"','"+kdskpd+"','"+ckdgiat+"','"+spd+"','"+csumber+"','"+cnmrekgiat+"','"+kd_sub_skpd+"')";                 
               }                                             
             }                       
             $(document).ready(function(){

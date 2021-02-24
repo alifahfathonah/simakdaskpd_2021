@@ -611,10 +611,10 @@ function jumlah_ang_spp_tu() {
 
             $sql ="SELECT * from (
             select kd_skpd, sumber1_ubah as sumber_dana,isnull(nilai_sumber,0) as nilai,isnull(nsumber1_su,0) as nilai_sempurna,isnull(nsumber1_ubah,0) as nilai_ubah from trdrka a where 
-            a.kd_sub_kegiatan='$giat' and a.kd_rek6='$rek' and left(a.no_trdrka,22)=left('$kd_sub_skpd',22) 
+            a.kd_sub_kegiatan='$giat' and a.kd_rek6='$rek' and left(a.kd_skpd,22)=left('$kd_sub_skpd',22) 
             union ALL
             select kd_skpd, sumber1_ubah as sumber_dana,isnull(nilai_sumber2,0) as nilai,isnull(nsumber2_su,0) as nilai_sempurna,isnull(nsumber2_ubah,0) as nilai_ubah from trdrka a where 
-            a.kd_sub_kegiatan='$giat' and a.kd_rek6='$rek' and left(a.no_trdrka,22)=left('$kd_sub_skpd',22) and nsumber2_ubah <> 0
+            a.kd_sub_kegiatan='$giat' and a.kd_rek6='$rek' and left(a.kd_skpd,22)=left('$kd_sub_skpd',22) and nsumber2_ubah <> 0
             )z ";                
 
     
@@ -1376,6 +1376,7 @@ function perusahaan() {
                         'no_spp'    => $resulte['no_spp'],
                         'tgl_spp'   => $resulte['tgl_spp'],
                         'kd_skpd'   => $resulte['kd_skpd'],
+                        'kd_sub_skpd'   => $resulte['kd_sub_skpd'],
                         'nm_skpd'   => $resulte['nm_skpd'],    
                         'jns_spp'   => $resulte['jns_spp'],
                         'kd_kegiatan'   => $resulte['kd_sub_kegiatan'],
@@ -1564,13 +1565,25 @@ function perusahaan() {
                             }
                 
                 }else{
-                 
+        $bidang=$this->session->userdata('bidang');            
+        if($bidang=='55'){ 
+            $filter="and b.kd_skpd='$kd_skpd'"; /*JIKA BPP */
+        }else {
+            $filter="and left(b.kd_skpd,17)=left('$kd_skpd',17)";
+        }
                              $cek = substr($kd_skpd,18,4);
                              if($cek=="0000"){                    
-                                $sql = "SELECT DISTINCT a.kd_subkegiatan,a.nm_subkegiatan FROM trdspd a inner join trhspd b on a.no_spd=b.no_spd
-                                where a.no_spd='$spd' and b.kd_skpd= '$kd_skpd' order by  a.kd_subkegiatan";
+                                $sql = "
+SELECT  b.kd_skpd, b.nm_skpd, b.kd_sub_kegiatan kd_subkegiatan,b.nm_sub_kegiatan nm_subkegiatan FROM trdspd a inner join trskpd b
+            on a.kd_subkegiatan =b.kd_sub_kegiatan 
+            where a.no_spd='$spd' AND (b.status_sub_kegiatan !='0' or b.status_sub_kegiatan is null) $filter and 
+            (upper(a.kd_subkegiatan) like upper('%$lccr%') or upper(b.nm_sub_kegiatan) like upper('%$lccr%')) order by  b.kd_skpd, a.kd_subkegiatan
+
+
+
+                               ";
                             }else{
-                               $sql = "SELECT DISTINCT a.kd_subkegiatan kd_sub_kegiatan,a.nm_subkegiatan nm_sub_kegiatan FROM trdspd a 
+                               $sql = "SELECT DISTINCT c.kd_skpd, c.nm_skpd,  a.kd_subkegiatan kd_sub_kegiatan,a.nm_subkegiatan nm_sub_kegiatan FROM trdspd a 
                                inner join trdrka c on c.kd_subkegiatan = a.kd_sub_kegiatan
                                where a.no_spd='$spd' and c.kd_skpd = '$kd_skpd' order by  a.kd_subkegiatan";
 
@@ -1587,7 +1600,9 @@ function perusahaan() {
             $result[] = array(
                         'id' => $ii,    
                         'kd_kegiatan' => $resulte['kd_subkegiatan'],  
-                        'nm_kegiatan' => $resulte['nm_subkegiatan']                        
+                        'nm_kegiatan' => $resulte['nm_subkegiatan'],
+                        'kd_skpd' => $resulte['kd_skpd'], 
+                        'nm_skpd' => $resulte['nm_skpd']                        
                         );
                         $ii++;
         }
@@ -1601,6 +1616,7 @@ function perusahaan() {
         
         $ckdkegi  = $this->input->post('kdkegiatan');
         $ckdrek   = $this->input->post('kdrek');
+        $kd_sub_skpd   = $this->input->post('kd_sub_skpd');
         $kdskpd= $this->session->userdata('kdskpd');
         
         if (  $ckdrek != '' ){
@@ -1610,7 +1626,7 @@ function perusahaan() {
         }
     
 
-        $sql      = "SELECT kd_rek6, nm_rek6 FROM trdrka where kd_sub_kegiatan = '$ckdkegi' and left(no_trdrka,22)=left('$kdskpd',22)  $NotIn  order by kd_rek6 ";
+        $sql      = "SELECT kd_rek6, nm_rek6 FROM trdrka where kd_sub_kegiatan = '$ckdkegi' and kd_skpd=left('$kd_sub_skpd',22)  $NotIn  order by kd_rek6 ";
         $query1   = $this->db->query($sql);  
         $result   = array();
         $ii       = 0;
@@ -1663,7 +1679,7 @@ function perusahaan() {
                     echo json_encode($msg);
                     exit();
                 }else{            
-                    $sql = "INSERT INTO trdspp (no_spp,kd_rek6,nm_rek6,nilai,kd_skpd,kd_sub_kegiatan,no_spd,sumber,nm_sub_kegiatan)"; 
+                    $sql = "INSERT INTO trdspp (no_spp,kd_rek6,nm_rek6,nilai,kd_skpd,kd_sub_kegiatan,no_spd,sumber,nm_sub_kegiatan, kd_sub_skpd)"; 
                     $asg = $this->db->query($sql.$csql);
                     if (!($asg)){
                        $msg = array('pesan'=>'0');
@@ -1700,7 +1716,7 @@ function perusahaan() {
                     echo json_encode($msg);
                     exit();
                 }else{            
-                    $sql = "INSERT INTO trdspp (no_spp,kd_rek6,nm_rek6,nilai,kd_skpd,kd_sub_kegiatan,no_spd,sumber,nm_sub_kegiatan)"; 
+                    $sql = "INSERT INTO trdspp (no_spp,kd_rek6,nm_rek6,nilai,kd_skpd,kd_sub_kegiatan,no_spd,sumber,nm_sub_kegiatan,kd_sub_skpd)"; 
                     $asg = $this->db->query($sql.$csql);
                     if (!($asg)){
                        $msg = array('pesan'=>'0');
