@@ -136,7 +136,7 @@ class Tukd extends CI_Controller {
 
 	function load_ttd_skpd($ttd="",$kd_skpd2=""){
         
-		$sql = "SELECT * FROM ms_ttd WHERE kd_skpd= '$kd_skpd2' and kode IN ('$ttd','KPA')";
+		$sql = "SELECT * FROM ms_ttd WHERE kd_skpd= '$kd_skpd2' and kode IN ('$ttd','KPA','PA')";
 		
         $mas = $this->db->query($sql);
         $result = array();
@@ -44455,7 +44455,7 @@ function cetak_bku(){
         $kd_skpd = $this->session->userdata('kdskpd');
         $bid = $this->session->userdata('bidang');
 		$kode_skpd = $this->input->post('kdskpd');
-		$sql = "SELECT * FROM ms_ttd WHERE left(kd_skpd,17)= left('$kd_skpd',17) and kode in ('$ttd','BPP','KPA')";
+		$sql = "SELECT * FROM ms_ttd WHERE left(kd_skpd,17)= left('$kd_skpd',17) and kode in ('$ttd','BPP','KPA','PA')";
 		
         $mas = $this->db->query($sql);
         $result = array();
