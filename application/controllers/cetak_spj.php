@@ -423,7 +423,7 @@ function spj($lcskpd='',$nbulan='',$ttd1='',$tgl_ctk='',$ttd2='',$ctk='',$atas='
 				<td align='left' style='font-size:12px;border-top:hidden;'>&ensp;&ensp;</td>
 			</tr>";
             
-            $lcrek = '210105010001'; // pph 21 terima
+            $lcrek = '210105010001'; // pph 21 terima 
             $csql = "SELECT (SELECT SUM(b.nilai) FROM trhtrmpot a INNER JOIN trdtrmpot b
                     ON a.no_bukti = b.no_bukti AND a.kd_skpd=b.kd_skpd
 					WHERE a.kd_skpd = '$lcskpd' AND 
@@ -476,7 +476,7 @@ function spj($lcskpd='',$nbulan='',$ttd1='',$tgl_ctk='',$ttd2='',$ctk='',$atas='
 				<td align='left' style='font-size:12px;border-top:hidden;'>&ensp;&ensp;</td>
             </tr>";
             
-            $lcrek = '210105020001'; // pph 22 terima
+            $lcrek = '210105020001'; // pph 22 terima 
             $csql = "SELECT (SELECT SUM(b.nilai) FROM trhtrmpot a INNER JOIN trdtrmpot b
                     ON a.no_bukti = b.no_bukti AND a.kd_skpd=b.kd_skpd
 					WHERE a.kd_skpd = '$lcskpd' AND 
@@ -530,7 +530,7 @@ function spj($lcskpd='',$nbulan='',$ttd1='',$tgl_ctk='',$ttd2='',$ctk='',$atas='
 				<td align='left' style='font-size:12px;border-top:hidden;'>&ensp;&ensp;</td>
             </tr>";
             
-			$lcrek = '210105030001'; // pph 23 terima
+			$lcrek = '210105030001'; // pph 23 terima 
             $csql = "SELECT (SELECT SUM(b.nilai) FROM trhtrmpot a INNER JOIN trdtrmpot b
                     ON a.no_bukti = b.no_bukti AND a.kd_skpd=b.kd_skpd
 					WHERE a.kd_skpd = '$lcskpd' AND 
@@ -584,7 +584,7 @@ function spj($lcskpd='',$nbulan='',$ttd1='',$tgl_ctk='',$ttd2='',$ctk='',$atas='
 				<td align='left' style='font-size:12px;border-top:hidden;'>&ensp;&ensp;</td>
             </tr>";			
             
-			$lcrek = '210108010001'; // IWP
+			$lcrek = '210108010001'; // IWP , 
             $csql = "SELECT 
 					SUM(CASE WHEN b.jns_spp IN ('1','2','3') AND MONTH(b.tgl_bukti)<'$nbulan' THEN a.nilai ELSE 0 END) AS up_iwp_lalu,
 					SUM(CASE WHEN b.jns_spp IN ('1','2','3') AND MONTH(b.tgl_bukti)='$nbulan' THEN a.nilai ELSE 0 END) AS up_iwp_ini,
@@ -619,7 +619,7 @@ function spj($lcskpd='',$nbulan='',$ttd1='',$tgl_ctk='',$ttd2='',$ctk='',$atas='
 				<td align='left' style='font-size:12px;border-top:hidden;'>&ensp;&ensp;</td>
             </tr>";
 			
-			$lcrek = '210107010001'; // TAPERUM
+			$lcrek = '210107010001'; // TAPERUM 
             $csql = "SELECT 
 					SUM(CASE WHEN b.jns_spp IN ('1','2','3') AND MONTH(b.tgl_bukti)<'$nbulan' THEN a.nilai ELSE 0 END) AS up_tap_lalu,
 					SUM(CASE WHEN b.jns_spp IN ('1','2','3') AND MONTH(b.tgl_bukti)='$nbulan' THEN a.nilai ELSE 0 END) AS up_tap_ini,
@@ -750,12 +750,12 @@ function spj($lcskpd='',$nbulan='',$ttd1='',$tgl_ctk='',$ttd2='',$ctk='',$atas='
 					SUM(ISNULL(jlain_brjs_ll,0)) jlain_brjs_ll, SUM(ISNULL(jlain_brjs_ini,0)) jlain_brjs_ini
 					 FROM(
 					SELECT 
-					SUM(CASE WHEN b.jns_spp IN ('1','2','3') AND MONTH(b.tgl_bukti)<'$nbulan' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_up_ll,
-					SUM(CASE WHEN b.jns_spp IN ('1','2','3') AND MONTH(b.tgl_bukti)='$nbulan' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_up_ini,
-					SUM(CASE WHEN b.jns_spp IN ('4') AND MONTH(b.tgl_bukti)<'$nbulan' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_gaji_ll,
-					SUM(CASE WHEN b.jns_spp IN ('4') AND MONTH(b.tgl_bukti)='$nbulan' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_gaji_ini,
-					SUM(CASE WHEN b.jns_spp IN ('6') AND MONTH(b.tgl_bukti)<'$nbulan' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_brjs_ll,
-					SUM(CASE WHEN b.jns_spp IN ('6') AND MONTH(b.tgl_bukti)='$nbulan' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_brjs_ini
+					SUM(CASE WHEN b.jns_spp IN ('1','2','3') AND MONTH(b.tgl_bukti)<'$nbulan' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_up_ll,
+					SUM(CASE WHEN b.jns_spp IN ('1','2','3') AND MONTH(b.tgl_bukti)='$nbulan' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_up_ini,
+					SUM(CASE WHEN b.jns_spp IN ('4') AND MONTH(b.tgl_bukti)<'$nbulan' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_gaji_ll,
+					SUM(CASE WHEN b.jns_spp IN ('4') AND MONTH(b.tgl_bukti)='$nbulan' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_gaji_ini,
+					SUM(CASE WHEN b.jns_spp IN ('6') AND MONTH(b.tgl_bukti)<'$nbulan' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_brjs_ll,
+					SUM(CASE WHEN b.jns_spp IN ('6') AND MONTH(b.tgl_bukti)='$nbulan' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_brjs_ini
 					FROM trdtrmpot a INNER JOIN trhtrmpot b ON a.no_bukti=b.no_bukti AND a.kd_skpd=b.kd_skpd
 					WHERE a.kd_skpd='$lcskpd'
 					UNION ALL
@@ -1634,12 +1634,12 @@ and kd_skpd='$lcskpd'";
 					SUM(ISNULL(jlain_brjs_ll,0)) jlain_brjs_ll, SUM(ISNULL(jlain_brjs_ini,0)) jlain_brjs_ini
 					 FROM(
 					SELECT 
-					SUM(CASE WHEN b.jns_spp IN ('1','2','3') AND MONTH(b.tgl_bukti)<'$nbulan' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_up_ll,
-					SUM(CASE WHEN b.jns_spp IN ('1','2','3') AND MONTH(b.tgl_bukti)='$nbulan' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_up_ini,
-					SUM(CASE WHEN b.jns_spp IN ('4') AND MONTH(b.tgl_bukti)<'$nbulan' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_gaji_ll,
-					SUM(CASE WHEN b.jns_spp IN ('4') AND MONTH(b.tgl_bukti)='$nbulan' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_gaji_ini,
-					SUM(CASE WHEN b.jns_spp IN ('6') AND MONTH(b.tgl_bukti)<'$nbulan' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_brjs_ll,
-					SUM(CASE WHEN b.jns_spp IN ('6') AND MONTH(b.tgl_bukti)='$nbulan' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_brjs_ini
+					SUM(CASE WHEN b.jns_spp IN ('1','2','3') AND MONTH(b.tgl_bukti)<'$nbulan' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_up_ll,
+					SUM(CASE WHEN b.jns_spp IN ('1','2','3') AND MONTH(b.tgl_bukti)='$nbulan' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_up_ini,
+					SUM(CASE WHEN b.jns_spp IN ('4') AND MONTH(b.tgl_bukti)<'$nbulan' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_gaji_ll,
+					SUM(CASE WHEN b.jns_spp IN ('4') AND MONTH(b.tgl_bukti)='$nbulan' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_gaji_ini,
+					SUM(CASE WHEN b.jns_spp IN ('6') AND MONTH(b.tgl_bukti)<'$nbulan' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_brjs_ll,
+					SUM(CASE WHEN b.jns_spp IN ('6') AND MONTH(b.tgl_bukti)='$nbulan' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_brjs_ini
 					FROM trdstrpot a INNER JOIN trhstrpot b ON a.no_bukti=b.no_bukti AND a.kd_skpd=b.kd_skpd
 					WHERE a.kd_skpd='$lcskpd'
 					UNION ALL
@@ -3090,12 +3090,12 @@ and kd_skpd='$lcskpd'";
           SUM(ISNULL(jlain_brjs_ll,0)) jlain_brjs_ll, SUM(ISNULL(jlain_brjs_ini,0)) jlain_brjs_ini
            FROM(
           SELECT 
-          SUM(CASE WHEN b.jns_spp IN ('1','2','3') AND b.tgl_bukti<'$ntgl1' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_up_ll,
-          SUM(CASE WHEN b.jns_spp IN ('1','2','3') AND (b.tgl_bukti BETWEEN '$ntgl1' and '$ntgl2') AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_up_ini,
-          SUM(CASE WHEN b.jns_spp IN ('4') AND b.tgl_bukti<'$ntgl1' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_gaji_ll,
-          SUM(CASE WHEN b.jns_spp IN ('4') AND (b.tgl_bukti BETWEEN '$ntgl1' and '$ntgl2') AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_gaji_ini,
-          SUM(CASE WHEN b.jns_spp IN ('6') AND b.tgl_bukti<'$ntgl1' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_brjs_ll,
-          SUM(CASE WHEN b.jns_spp IN ('6') AND (b.tgl_bukti BETWEEN '$ntgl1' and '$ntgl2') AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_brjs_ini
+          SUM(CASE WHEN b.jns_spp IN ('1','2','3') AND b.tgl_bukti<'$ntgl1' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_up_ll,
+          SUM(CASE WHEN b.jns_spp IN ('1','2','3') AND (b.tgl_bukti BETWEEN '$ntgl1' and '$ntgl2') AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_up_ini,
+          SUM(CASE WHEN b.jns_spp IN ('4') AND b.tgl_bukti<'$ntgl1' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_gaji_ll,
+          SUM(CASE WHEN b.jns_spp IN ('4') AND (b.tgl_bukti BETWEEN '$ntgl1' and '$ntgl2') AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_gaji_ini,
+          SUM(CASE WHEN b.jns_spp IN ('6') AND b.tgl_bukti<'$ntgl1' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_brjs_ll,
+          SUM(CASE WHEN b.jns_spp IN ('6') AND (b.tgl_bukti BETWEEN '$ntgl1' and '$ntgl2') AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_brjs_ini
           FROM trdtrmpot a INNER JOIN trhtrmpot b ON a.no_bukti=b.no_bukti AND a.kd_skpd=b.kd_skpd
           WHERE LEFT(a.kd_skpd,17)= LEFT('$lcskpd',17)
           UNION ALL
@@ -3116,12 +3116,12 @@ and kd_skpd='$lcskpd'";
           SUM(ISNULL(jlain_brjs_ll,0)) jlain_brjs_ll, SUM(ISNULL(jlain_brjs_ini,0)) jlain_brjs_ini
            FROM(
           SELECT 
-          SUM(CASE WHEN b.jns_spp IN ('1','2','3') AND MONTH(b.tgl_bukti)<'$nbulan' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_up_ll,
-          SUM(CASE WHEN b.jns_spp IN ('1','2','3') AND MONTH(b.tgl_bukti)='$nbulan' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_up_ini,
-          SUM(CASE WHEN b.jns_spp IN ('4') AND MONTH(b.tgl_bukti)<'$nbulan' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_gaji_ll,
-          SUM(CASE WHEN b.jns_spp IN ('4') AND MONTH(b.tgl_bukti)='$nbulan' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_gaji_ini,
-          SUM(CASE WHEN b.jns_spp IN ('6') AND MONTH(b.tgl_bukti)<'$nbulan' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_brjs_ll,
-          SUM(CASE WHEN b.jns_spp IN ('6') AND MONTH(b.tgl_bukti)='$nbulan' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_brjs_ini
+          SUM(CASE WHEN b.jns_spp IN ('1','2','3') AND MONTH(b.tgl_bukti)<'$nbulan' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_up_ll,
+          SUM(CASE WHEN b.jns_spp IN ('1','2','3') AND MONTH(b.tgl_bukti)='$nbulan' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_up_ini,
+          SUM(CASE WHEN b.jns_spp IN ('4') AND MONTH(b.tgl_bukti)<'$nbulan' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_gaji_ll,
+          SUM(CASE WHEN b.jns_spp IN ('4') AND MONTH(b.tgl_bukti)='$nbulan' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_gaji_ini,
+          SUM(CASE WHEN b.jns_spp IN ('6') AND MONTH(b.tgl_bukti)<'$nbulan' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_brjs_ll,
+          SUM(CASE WHEN b.jns_spp IN ('6') AND MONTH(b.tgl_bukti)='$nbulan' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_brjs_ini
           FROM trdtrmpot a INNER JOIN trhtrmpot b ON a.no_bukti=b.no_bukti AND a.kd_skpd=b.kd_skpd
           WHERE LEFT(a.kd_skpd,17)= LEFT('$lcskpd',17)
           UNION ALL
@@ -4153,12 +4153,12 @@ and kd_skpd='$lcskpd'";
           SUM(ISNULL(jlain_brjs_ll,0)) jlain_brjs_ll, SUM(ISNULL(jlain_brjs_ini,0)) jlain_brjs_ini
            FROM(
           SELECT 
-          SUM(CASE WHEN b.jns_spp IN ('1','2','3') AND b.tgl_bukti<'$ntgl1' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_up_ll,
-          SUM(CASE WHEN b.jns_spp IN ('1','2','3') AND (b.tgl_bukti BETWEEN '$ntgl1' AND '$ntgl2') AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_up_ini,
-          SUM(CASE WHEN b.jns_spp IN ('4') AND b.tgl_bukti<'$ntgl1' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_gaji_ll,
-          SUM(CASE WHEN b.jns_spp IN ('4') AND (b.tgl_bukti BETWEEN '$ntgl1' AND '$ntgl2') AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_gaji_ini,
-          SUM(CASE WHEN b.jns_spp IN ('6') AND b.tgl_bukti<'$ntgl1' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_brjs_ll,
-          SUM(CASE WHEN b.jns_spp IN ('6') AND (b.tgl_bukti BETWEEN '$ntgl1' AND '$ntgl2') AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_brjs_ini
+          SUM(CASE WHEN b.jns_spp IN ('1','2','3') AND b.tgl_bukti<'$ntgl1' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_up_ll,
+          SUM(CASE WHEN b.jns_spp IN ('1','2','3') AND (b.tgl_bukti BETWEEN '$ntgl1' AND '$ntgl2') AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_up_ini,
+          SUM(CASE WHEN b.jns_spp IN ('4') AND b.tgl_bukti<'$ntgl1' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_gaji_ll,
+          SUM(CASE WHEN b.jns_spp IN ('4') AND (b.tgl_bukti BETWEEN '$ntgl1' AND '$ntgl2') AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_gaji_ini,
+          SUM(CASE WHEN b.jns_spp IN ('6') AND b.tgl_bukti<'$ntgl1' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_brjs_ll,
+          SUM(CASE WHEN b.jns_spp IN ('6') AND (b.tgl_bukti BETWEEN '$ntgl1' AND '$ntgl2') AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_brjs_ini
           FROM trdstrpot a INNER JOIN trhstrpot b ON a.no_bukti=b.no_bukti AND a.kd_skpd=b.kd_skpd
           WHERE LEFT(a.kd_skpd,17)= LEFT('$lcskpd',17) 
           UNION ALL
@@ -4179,12 +4179,12 @@ and kd_skpd='$lcskpd'";
           SUM(ISNULL(jlain_brjs_ll,0)) jlain_brjs_ll, SUM(ISNULL(jlain_brjs_ini,0)) jlain_brjs_ini
            FROM(
           SELECT 
-          SUM(CASE WHEN b.jns_spp IN ('1','2','3') AND MONTH(b.tgl_bukti)<'$nbulan' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_up_ll,
-          SUM(CASE WHEN b.jns_spp IN ('1','2','3') AND MONTH(b.tgl_bukti)='$nbulan' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_up_ini,
-          SUM(CASE WHEN b.jns_spp IN ('4') AND MONTH(b.tgl_bukti)<'$nbulan' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_gaji_ll,
-          SUM(CASE WHEN b.jns_spp IN ('4') AND MONTH(b.tgl_bukti)='$nbulan' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_gaji_ini,
-          SUM(CASE WHEN b.jns_spp IN ('6') AND MONTH(b.tgl_bukti)<'$nbulan' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_brjs_ll,
-          SUM(CASE WHEN b.jns_spp IN ('6') AND MONTH(b.tgl_bukti)='$nbulan' AND a.kd_rek6 NOT IN ('2130101','2130201','2130401','2130301','2110901','2110701','2110501','2130501') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_brjs_ini
+          SUM(CASE WHEN b.jns_spp IN ('1','2','3') AND MONTH(b.tgl_bukti)<'$nbulan' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_up_ll,
+          SUM(CASE WHEN b.jns_spp IN ('1','2','3') AND MONTH(b.tgl_bukti)='$nbulan' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_up_ini,
+          SUM(CASE WHEN b.jns_spp IN ('4') AND MONTH(b.tgl_bukti)<'$nbulan' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_gaji_ll,
+          SUM(CASE WHEN b.jns_spp IN ('4') AND MONTH(b.tgl_bukti)='$nbulan' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_gaji_ini,
+          SUM(CASE WHEN b.jns_spp IN ('6') AND MONTH(b.tgl_bukti)<'$nbulan' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_brjs_ll,
+          SUM(CASE WHEN b.jns_spp IN ('6') AND MONTH(b.tgl_bukti)='$nbulan' AND a.kd_rek6 NOT IN ('210105010001','210105030001','210108010001','210601050005','210107010001','210105020001') THEN  ISNULL(a.nilai,0) ELSE 0 END) AS jlain_brjs_ini
           FROM trdstrpot a INNER JOIN trhstrpot b ON a.no_bukti=b.no_bukti AND a.kd_skpd=b.kd_skpd
           WHERE LEFT(a.kd_skpd,17)= LEFT('$lcskpd',17) 
           UNION ALL
