@@ -107,31 +107,7 @@
             align:"left"}
         ]],
         onSelect:function(rowIndex,rowData){          
-          nomor = rowData.no_bukti;
-          tgl   = rowData.tgl_bukti;
-          nokas_pot = rowData.no_kas_pot;
-          tglpot   = rowData.tgl_pot;
-          ketpot   = rowData.ketpot;
-          kode  = rowData.kd_skpd;
-          nama  = rowData.nm_skpd;
-          ket   = rowData.ket;          
-          jns   = rowData.jns_beban; 
-          tot   = rowData.total;
-          notagih  = rowData.no_tagih;
-          tgltagih = rowData.tgl_tagih;
-          ststagih = rowData.sts_tagih; 
-          vpay     = rowData.pay;         
-          statup     = rowData.ketlpj;         
-          statval    = rowData.ketspj;            
-          srekwal     = rowData.rekening_awal;                          
-          
-          get(nomor,nomor_tgl,tgl,kode,nama,ket,jns,tot,notagih,tgltagih,ststagih,vpay,nokas_pot,tglpot,ketpot,statup,statval,srekwal);          
-          load_detail();
-          load_detail_rekbank();
-          load_detail_pot(nokas_pot);          
-          if (ststagih !='1'){   
-           
-          }                                                      
+                                                             
         },        
         onDblClickRow:function(rowIndex,rowData){  
           section2();    
